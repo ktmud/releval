@@ -350,7 +350,7 @@ export default {
   .card-content
     position: absolute;
     top: 100px;
-    bottom: 60px;
+    bottom: 50px;
     left: 10px;
     right: 10px;
     overflow: auto;
@@ -381,7 +381,9 @@ export default {
     .el-form-item
       margin-bottom: 0;
     .el-form-item__label
-      padding: 12px 8px 0 0;
+      padding: 8px 8px 0 0;
+    .el-form-item__content
+      line-height: 28px;
   .table
     .url
       display: inline-block;
