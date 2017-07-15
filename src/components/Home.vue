@@ -234,7 +234,7 @@ export default {
       let link = document.createElement('a')
       link.href = textFile
       link.target = '_blank'
-      link.download = `QREL_${this.queryId || '00000'}.txt`
+      link.download = `QREL_${this.queryId || '00000'}_${this.assessorId || 'annonymous'}.txt`
       link.click()
     },
     updateConfig () {
