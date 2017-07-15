@@ -25,8 +25,8 @@ api.queryBody = function(query, from, size) {
     "from": from,
     "query": query,
     "highlight": {
-      "number_of_fragments": 2,
-      "fragment_size": 200,
+      "number_of_fragments": 3,
+      "fragment_size": 300,
       "fields": {
         "title": {},
         "url": {},
@@ -54,7 +54,7 @@ function cleanHitItem (item) {
     title_h: title_h[0] || '[UNTITLED]',
     // 1 piece of highlighted text is too short,
     // 3 pieces are too long
-    exerpt: text_h.join(' ... '),
+    exerpt: text_h,
     url: item.fields.url[0],
     url_h: url_h[0],
     date: date,
@@ -82,6 +82,7 @@ api.search = opt => {
     query = {
       multi_match: {
         query: query,
+        // ^ is used to boost the field
         fields: ['title^3', 'url', 'text']
       }
     }

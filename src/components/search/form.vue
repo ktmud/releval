@@ -22,13 +22,17 @@ export default {
     submit (event) {
       event.preventDefault()
       router.push({
-        name: 'search',
         query: {
           q: this.q
         }
       })
     }
-  }
+  },
+  watch: {
+    '$route': function(to) {
+      this.q = this.$route.query.q
+    },
+  },
 }
 </script>
 
