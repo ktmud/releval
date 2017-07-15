@@ -110,7 +110,9 @@ export default {
     },
     markItem (grade) {
       this.grades[this.currentItem.url] = grade
-      this.nextItem()
+      this.$nextTick(() => {
+        this.nextItem()
+      })
     },
     scrollCurrentIntoView () {
       let current = this.currentItem
