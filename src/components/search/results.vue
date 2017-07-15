@@ -11,7 +11,7 @@
         <el-tooltip content="Very relevant">
         </el-tooltip>
       -->
-      <el-radio-group v-model="grades[item.url]" size="small">
+      <el-radio-group v-model="grades[item.url]" size="small" @click.native="clickGrader">
         <el-radio-button label="0">
           <i class="el-icon-close"></i>
         </el-radio-button>
@@ -55,6 +55,7 @@ export default {
     })
     return {
       currentItem: this.items[0],
+      lastGrades: {...grades},
       // grades of urls in current page
       grades: grades
     }
@@ -76,6 +77,9 @@ export default {
       this.grades = grades
     },
     activate (item) {
+      if (this.scrolling) {
+        return
+      }
       if (this.currentItem) {
         this.currentItem.active = false
       }
@@ -83,6 +87,9 @@ export default {
       this.currentItem = item
     },
     deactive (item) {
+      if (this.scrolling) {
+        return
+      }
       item.active = false
     },
     nextItem () {
@@ -106,11 +113,27 @@ export default {
       this.nextItem()
     },
     scrollCurrentIntoView () {
-      let $current = this.$el.querySelectorAll('.result-item')[this.currentItem.index]
+      let current = this.currentItem
+      let $current = this.$el.querySelectorAll('.result-item')[current.index]
       if ($current) {
+        this.scrolling = true
         window.scrollTo(0, $current.offsetTop - 20)
+        this.$nextTick(() => {
+          this.scrolling = false
+        })
       }
-    }
+    },
+    clickGrader (event) {
+      // click event trigger by the input[type=radio]
+      if (event.target.tagName == 'INPUT') {
+        if (event.target.value == this.lastGrades[this.currentItem.url]) {
+          this.grades[this.currentItem.url] = null
+          this.lastGrades[this.currentItem.url] = null
+        } else {
+          this.lastGrades[this.currentItem.url] = event.target.value
+        }
+      }
+    },
   },
   mounted () {
     window.addEventListener('keydown', (event) => {

@@ -192,11 +192,15 @@ export default {
     updateRating (grades = {}) {
       let rated = { ...this.rated }
       for (var url in grades) {
-        if (grades[url] != null) {
+        if (grades[url] !== undefined) {
           if (grades[url] != rated[url]) {
             this.justUpdated = url
           }
-          rated[url] = grades[url]
+          if (grades[url] === null) {
+            delete rated[url]
+          } else {
+            rated[url] = grades[url]
+          }
         }
       }
       this.rated = rated

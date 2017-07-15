@@ -6,7 +6,7 @@
           RelEval
         </router-link>
       </el-col>
-      <el-col :span="18">
+      <el-col :span="10">
         <search-form inline icon="search" size="76" />
       </el-col>
     </header>
