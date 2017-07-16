@@ -63,12 +63,16 @@
                 <dd>Next item</dd>
                 <dt><kbd>k</kbd></dt>
                 <dd>Previous item</dd>
+                <dt><kbd>h</kbd></dt>
+                <dd>Previous page</dd>
+                <dt><kbd>l</kbd></dt>
+                <dd>Next page</dd>
                 <dt>
                   <kbd>0</kbd>
                   <kbd>1</kbd>
                   <kbd>2</kbd>
                 </dt>
-                <dd>Grade current item</dd>
+                <dd>Grade highlighted item</dd>
               </dl>
             </div>
             <table class="table" style="width: 100%;">

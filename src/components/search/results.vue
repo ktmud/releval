@@ -243,8 +243,10 @@ export default {
   margin-right: 2px;
 .result-item-count
   position: absolute;
-  left: -2.2em;
-  width: 1.6em;
+  right: 100%;
+  margin-right: 0.5em;
+  min-width: 1em;
+  padding: 0 0.3em;
   top: 1px;
   line-height: 1.6em;
   text-align: center;
