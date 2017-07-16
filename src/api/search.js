@@ -83,7 +83,7 @@ api.search = opt => {
       multi_match: {
         query: query,
         // ^ is used to boost the field
-        fields: ['title^3', 'url', 'text']
+        fields: ['title', 'url', 'text']
       }
     }
   }
