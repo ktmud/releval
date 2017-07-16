@@ -20,7 +20,8 @@
             <p class="results-count text-sm">
               {{ start + 1 }} to {{ end }} of {{ meta.total }} results ({{ meta.took }} seconds)
             </p>
-            <search-results ref="results" :query="query" :items="hits"
+            <search-results ref="results"
+              :start="start" :query="query" :items="hits"
               @updateRating="updateRating"
               @nextPage="nextPage"
               @prevPage="prevPage"

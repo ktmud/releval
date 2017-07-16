@@ -2,7 +2,8 @@
   <div class="results">
     <div class="result-item" v-for="(item, index) in items"
       :class="{ active: item.active }"
-      @mouseenter="activate(item)" @mouseleave="deactive(item)">
+      @mouseenter="activate(item)">
+      <span class="result-item-count">{{ start + item.index + 1 }}</span>
       <!--
         <el-tooltip content="Non-relevant">
         </el-tooltip>
@@ -43,9 +44,10 @@
 
 <script>
 import Vue from 'vue'
+import Velocity from 'velocity-animate'
 
 export default {
-  props: ['items', 'query'],
+  props: ['items', 'query', 'start'],
   data() {
     let grades = {}
     this.items.forEach((item, i) => {
@@ -81,20 +83,23 @@ export default {
         return
       }
       if (this.currentItem) {
-        this.currentItem.active = false
+        this.deactive(this.currentItem);
       }
       item.active = true
       this.currentItem = item
     },
     deactive (item) {
-      if (this.scrolling) {
-        return
-      }
       item.active = false
+    },
+    prevPage () {
+      this.$emit('prevPage')
+    },
+    nextPage () {
+      this.$emit('nextPage')
     },
     nextItem () {
       if (this.currentItem.index == this.items.length - 1) {
-        this.$emit('nextPage')
+        this.nextPage()
         return
       }
       this.activate(this.items[this.currentItem.index + 1])
@@ -102,7 +107,7 @@ export default {
     },
     prevItem () {
       if (this.currentItem.index == 0) {
-        this.$emit('prevPage')
+        this.prevPage();
         return
       }
       this.activate(this.items[this.currentItem.index - 1])
@@ -119,7 +124,14 @@ export default {
       let $current = this.$el.querySelectorAll('.result-item')[current.index]
       if ($current) {
         this.scrolling = true
-        window.scrollTo(0, $current.offsetTop - 20)
+        let top = $current.offsetTop - 20
+        Velocity(document.documentElement, 'stop')
+        Velocity(document.documentElement, 'scroll', {
+          offset: top,
+          easing: 'ease-in-out',
+          mobileHA: false,
+          duration: 600
+        })
         this.$nextTick(() => {
           this.scrolling = false
         })
@@ -148,6 +160,12 @@ export default {
           break;
         case 'k':
           this.prevItem()
+          break;
+        case 'h':
+          this.prevPage()
+          break;
+        case 'l':
+          this.nextPage()
           break;
         case '0':
         case '1':
@@ -223,4 +241,15 @@ export default {
   display: inline-block;
   color: #666;
   margin-right: 2px;
+.result-item-count
+  position: absolute;
+  left: -2.2em;
+  width: 1.6em;
+  top: 1px;
+  line-height: 1.6em;
+  text-align: center;
+  border: 1px solid #ccc;
+  color: #666;
+  border-radius: 4px;
+  font-size: 13px;
 </style>
