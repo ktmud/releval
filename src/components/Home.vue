@@ -263,7 +263,9 @@ export default {
         storage.load('configs').then(config => {
           config = config || {}
           this.assessorId = config.assessorId
-          this.showAll = config.showAll
+          if ('showAll' in config) {
+            this.showAll = config.showAll
+          }
         }),
         storage.load('q:' + this.query).then(data => {
           data = data || {}
@@ -312,10 +314,13 @@ export default {
       this.loading = true
       this.loadResults()
     },
-    'queryId' (to) {
+    'queryId' () {
       this.updateRating()
     },
-    'assessorId' (to) {
+    'assessorId' () {
+      this.updateConfig()
+    },
+    'showAll' () {
       this.updateConfig()
     },
   },
